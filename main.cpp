@@ -2,6 +2,8 @@
 #include <SDL2/SDL.h>
 #include <libtcod.hpp>
 
+// #include "SAI/istate_machine.hpp"
+
 int main(int argc, char* argv[]) {
   auto console = tcod::Console{80, 25};  // Main console.
 
