@@ -12,6 +12,7 @@
 #include "istate.hpp"
 
 #include <vector>
+#include <algorithm>
 
 namespace SAI
 {
@@ -20,18 +21,28 @@ namespace SAI
     {
     public:
         virtual SAI_GENERIC_STATE* SelectState(
-            const std::vector<SAI_GENERIC_STATE*>& states
+            const std::vector<SAI_GENERIC_STATE*>& states,
+            const SAI_STATE_PARAMETERS* parameters
         ) const = 0;
     };
 
     SAI_TEMPLATE_STATE_PARAMETERS
-    class MaxProbabilityStateSelector : public IStateSelector
+    class MaxProbabilityStateSelector : public IStateSelector<SAI_STATE_PARAMETERS>
     {
     public:
         SAI_GENERIC_STATE* SelectState(
-            const std::vector<SAI_GENERIC_STATE*>& states
-        ) const override;
-    }
+            const std::vector<SAI_GENERIC_STATE*>& states,
+            const SAI_STATE_PARAMETERS* parameters
+        ) const override
+        {
+            return *std::max_element(
+                states.begin(), 
+                states.end(), 
+                [parameters](SAI_GENERIC_STATE* a, SAI_GENERIC_STATE* b) {
+                    return a->GetProbability(parameters) < b->GetProbability(parameters);
+            });
+        }
+    };
 }
 
 #endif
