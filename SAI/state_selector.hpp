@@ -17,14 +17,14 @@
 namespace SAI
 {
     SAI_TEMPLATE_STATE_PARAMETERS
-    class IStateSelector
+    class StateSelector
     {
     public:
         virtual SAI_GENERIC_STATE* SelectState(const std::vector<SAI_GENERIC_STATE*>& states, const SAI_STATE_PARAMETERS* parameters) const = 0;
     };
 
     SAI_TEMPLATE_STATE_PARAMETERS
-    class MaxProbabilityStateSelector : public IStateSelector<SAI_STATE_PARAMETERS>
+    class MaxProbabilityStateSelector : public StateSelector<SAI_STATE_PARAMETERS>
     {
     public:
         SAI_GENERIC_STATE* SelectState(

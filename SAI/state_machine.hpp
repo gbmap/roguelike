@@ -16,7 +16,7 @@ a sample.
 #include <vector>
 
 #include "def.hpp"
-#include "istate_selector.hpp"
+#include "state_selector.hpp"
 #include "state.hpp"
 
 namespace SAI
@@ -29,7 +29,7 @@ namespace SAI
         void RemoveState(SAI_GENERIC_STATE* pState);
         
         SAI_GENERIC_STATE* GetCurrentState(
-            const IStateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
+            const StateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
             const SAI_STATE_PARAMETERS* pParameters
         ) const;
     private:
@@ -49,18 +49,18 @@ namespace SAI
     SAI_TEMPLATE_STATE_PARAMETERS
     void StateMachine<SAI_STATE_PARAMETERS>::RemoveState(SAI_GENERIC_STATE* pState)
     {
-        auto it = std::find(this->m_States.begin(), this->m_States.end(), pState);
-        if (it != this->m_States.end())
-            this->m_States.erase(it);
+        auto it = std::find(m_States.begin(), m_States.end(), pState);
+        if (it != m_States.end())
+            m_States.erase(it);
     }
 
     SAI_TEMPLATE_STATE_PARAMETERS
     SAI_GENERIC_STATE* StateMachine<SAI_STATE_PARAMETERS>::GetCurrentState(
-        const IStateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
+        const StateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
         const SAI_STATE_PARAMETERS* parameters
     ) const
     {
-        return pStateSelector->SelectState(this->m_States, parameters);
+        return pStateSelector->SelectState(m_States, parameters);
     }
 }
 
