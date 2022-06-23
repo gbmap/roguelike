@@ -12,8 +12,11 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
 add_executable(roguelike main.cpp)
 add_executable(sai_tests SAI/tests/test_main.cpp)
+add_executable(tests_vec2d tests/math/tests_vec2d.cpp)
+
 target_link_libraries(roguelike PRIVATE libtcod::libtcod SDL2::SDL2 SDL2::SDL2main)
 target_link_libraries(sai_tests PRIVATE Catch2::Catch2 Catch2::Catch2WithMain)
+target_link_libraries(tests_vec2d PRIVATE Catch2::Catch2 Catch2::Catch2WithMain)
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 

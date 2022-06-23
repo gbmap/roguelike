@@ -50,7 +50,8 @@ void UpdateStats(Stats* stats, float dt)
 }
 
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
   auto console = tcod::Console{80, 25};  // Main console.
 
   // Configure the context.
@@ -77,7 +78,8 @@ int main(int argc, char* argv[]) {
 
   SAI::MaxProbabilityStateSelector<Stats> selector;
 
-  while (1) {  // Game loop.
+  while (1) 
+  {  
 
     float dt = 1.0; 
     UpdateStats(&stats, dt);
@@ -137,9 +139,8 @@ int main(int argc, char* argv[]) {
     context->present(console);
 
     SDL_Event event;
-    // SDL_WaitEvent(nullptr);  // Optional, sleep until events are available.
     while (SDL_PollEvent(&event)) {
-      context->convert_event_coordinates(event);  // Optional, converts pixel coordinates into tile coordinates.
+      // context->convert_event_coordinates(event);  // Optional, converts pixel coordinates into tile coordinates.
       switch (event.type) {
         case SDL_QUIT:
           return 0;  // Exit.
