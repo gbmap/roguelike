@@ -9,7 +9,7 @@
 */
 
 #include "def.hpp"
-#include "istate.hpp"
+#include "state.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -20,10 +20,7 @@ namespace SAI
     class IStateSelector
     {
     public:
-        virtual SAI_GENERIC_STATE* SelectState(
-            const std::vector<SAI_GENERIC_STATE*>& states,
-            const SAI_STATE_PARAMETERS* parameters
-        ) const = 0;
+        virtual SAI_GENERIC_STATE* SelectState(const std::vector<SAI_GENERIC_STATE*>& states, const SAI_STATE_PARAMETERS* parameters) const = 0;
     };
 
     SAI_TEMPLATE_STATE_PARAMETERS

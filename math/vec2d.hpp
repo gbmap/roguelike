@@ -46,8 +46,6 @@ namespace roguelike
 
     typedef Vec2D<int> vec2di;
     typedef Vec2D<float> vec2df;
-    // template class Vec2D<float>;
-    // template class Vec2D<int>;
 
     #endif
 }

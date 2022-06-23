@@ -3,7 +3,6 @@
 #include <libtcod.hpp>
 
 #include "SAI/state_machine.hpp"
-#include "SAI/istate_selector.hpp"
 
 #define clamp01(a) (a < 0.0f ? 0.0f : (a > 1.0f ? 1.0f : a));
 
@@ -14,41 +13,32 @@ struct Stats
   float energy;
 };
 
-template class SAI::StateMachine<Stats>;
+// A potential problem here is collision with user provided
+// state ids. This can be mitigated with an algorithm for
+// generating unique state ids.
 
-class SeekFoodState : public SAI::IState<Stats>
-{
-public:
-  float GetProbability(const Stats* parameters) const override
-  {
+// The state machine API could aos implement collision testing
+// when adding states.
+SAI::State<Stats> stateSeekFood = SAI::State<Stats>(0,
+  [](const Stats* parameters) {
     return 1.0f - parameters->food;
-  }
-};
+});
 
-class SeekShelterState : public SAI::IState<Stats>
-{
-public:
-  float GetProbability(const Stats* parameters) const override
-  {
+SAI::State<Stats> stateSeekShelter = SAI::State<Stats>(1,
+  [](const Stats* parameters) {
     return 1.0f - parameters->energy;
-  }
-};
+});
 
-class LeasureState : public SAI::IState<Stats>
-{
-public:
-  float GetProbability(const Stats* parameters) const override
-  {
+SAI::State<Stats> stateLeisure = SAI::State<Stats>(2,
+  [](const Stats* parameters) {
     return parameters->energy * parameters->food;
-  }
-};
+});
 
 void UpdateStats(Stats* stats, float dt)
 {
   stats->food = clamp01(stats->food - 0.05f*dt);
   stats->energy = clamp01(stats->energy - 0.025f*dt);
 }
-
 
 int main(int argc, char* argv[]) 
 {
@@ -72,9 +62,9 @@ int main(int argc, char* argv[])
   stats.food = 1.0f;
 
   SAI::StateMachine<Stats> stateMachine;
-  stateMachine.AddState(new SeekFoodState());
-  stateMachine.AddState(new SeekShelterState());
-  stateMachine.AddState(new LeasureState());
+  stateMachine.AddState(&stateSeekFood);
+  stateMachine.AddState(&stateSeekShelter);
+  stateMachine.AddState(&stateLeisure);
 
   SAI::MaxProbabilityStateSelector<Stats> selector;
 
@@ -84,42 +74,8 @@ int main(int argc, char* argv[])
     float dt = 1.0; 
     UpdateStats(&stats, dt);
 
-    SAI::IState<Stats>* pCurrentState = stateMachine.GetCurrentState(&selector, &stats);
+    SAI::State<Stats>* pCurrentState = stateMachine.GetCurrentState(&selector, &stats);
     std::string stateName = "";
-
-    // This would normally implemented in a state class
-    if (dynamic_cast<SeekFoodState*>(pCurrentState) != nullptr) 
-    {
-      int xDelta = std::max(-1, std::min(1, 3 - stats.position[0]));
-      int yDelta = std::max(-1, std::min(1, 3 - stats.position[1]));
-      stats.position = {stats.position[0] + xDelta, stats.position[1] + yDelta};
-
-      if (xDelta == 0 && yDelta == 0){
-        stats.food += 0.5f*dt;
-      }
-
-      stateName = "SeekFoodState";
-    }
-    else if (dynamic_cast<SeekShelterState*>(pCurrentState) != nullptr)
-    {
-      int xDelta = std::max(-1, std::min(1, 7 - stats.position[0]));
-      int yDelta = std::max(-1, std::min(1, 7 - stats.position[1]));
-      stats.position = {stats.position[0] + xDelta, stats.position[1] + yDelta};
-
-      if (xDelta == 0 && yDelta == 0){
-        stats.energy += 0.5f*dt;
-      }
-      
-      stateName = "SeekShelterState";
-    }
-    else if (dynamic_cast<LeasureState*>(pCurrentState) != nullptr)
-    {
-      int xDelta = std::max(-1, std::min(1, 3 - stats.position[0]));
-      int yDelta = std::max(-1, std::min(1, 7 - stats.position[1]));
-      stats.position = {stats.position[0] + xDelta, stats.position[1] + yDelta};
-      
-      stateName = "LeasureState";
-    }
 
     TCOD_console_clear(console.get());
 

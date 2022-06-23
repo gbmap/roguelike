@@ -8,8 +8,9 @@ template class StateMachine<void>;
 
 TEST_CASE("MaxProbabilityStateSelector 2.0 > 1.0", "[MaxProbabilityStateSelector]")
 {
-    FixedProbabilityState<void> stateA(1.0);
-    FixedProbabilityState<void> stateB(2.0);
+
+    State<void> stateA = SAI::State<void>(0, [](const void* pParameters) { return 0.0f; });
+    State<void> stateB = SAI::State<void>(1, [](const void* pParameters) { return 1.0f; });
 
     MaxProbabilityStateSelector<void> selector;
 

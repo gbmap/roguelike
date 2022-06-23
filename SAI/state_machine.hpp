@@ -16,8 +16,8 @@ a sample.
 #include <vector>
 
 #include "def.hpp"
-#include "istate.hpp"
 #include "istate_selector.hpp"
+#include "state.hpp"
 
 namespace SAI
 {
