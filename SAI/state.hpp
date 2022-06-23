@@ -8,8 +8,12 @@ namespace SAI
     typedef float t_probability;
     typedef unsigned int t_stateId;
 
-#define FUNC_PTR_GET_PROBABILITY(fncGetProbability) t_probability (*fncGetProbability)(const SAI_STATE_PARAMETERS* pParameters)
+#define FUNC_PTR_GET_PROBABILITY(fncGetProbability) \
+ t_probability (*fncGetProbability)(const SAI_STATE_PARAMETERS* pParameters)
 
+    /*
+        Defines a wrapper for a function that maps from TStateParameters -> t_probability.
+    */
     SAI_TEMPLATE_STATE_PARAMETERS
     class State
     {

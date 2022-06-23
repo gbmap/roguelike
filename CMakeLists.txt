@@ -10,7 +10,7 @@ find_package(Catch2 CONFIG REQUIRED)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
-add_executable(roguelike main.cpp)
+add_executable(roguelike main.cpp app/roguelike_app.cpp app/renderer.cpp)
 add_executable(tests_sai SAI/tests/test_main.cpp)
 add_executable(tests_vec2d tests/math/tests_vec2d.cpp)
 

@@ -1,13 +1,16 @@
 #ifndef VEC2D_H
 #define VEC2D_H
 
+#include <stdint.h>
+#include <cmath>
+
 namespace roguelike
 {
     template<typename T> 
     class Vec2D
     {
     public:
-        Vec2D(T x, T y) : x(0), y(0) {}
+        Vec2D(T x, T y) : x(x), y(y) {}
 
         T GetX() const { return x; }
         T GetY() const { return y; }
@@ -44,8 +47,8 @@ namespace roguelike
         T y;
     };
 
-    typedef Vec2D<int> vec2di;
-    typedef Vec2D<float> vec2df;
+    typedef Vec2D<int32_t> vec2di;
+    typedef Vec2D<float_t> vec2df;
 
     #endif
 }

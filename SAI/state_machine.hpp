@@ -21,6 +21,10 @@ a sample.
 
 namespace SAI
 {
+    /*
+        Holds a collection of states and provides a method to select
+        the next state based on each observed state's probability.
+    */
     SAI_TEMPLATE_STATE_PARAMETERS
     class StateMachine
     {
