@@ -1,6 +1,4 @@
-#ifndef VEC2D_H
-#define VEC2D_H
-
+#pragma once
 #include <stdint.h>
 #include <cmath>
 
@@ -49,6 +47,4 @@ namespace roguelike
 
     typedef Vec2D<int32_t> vec2di;
     typedef Vec2D<float_t> vec2df;
-
-    #endif
 }

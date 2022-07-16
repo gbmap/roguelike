@@ -1,10 +1,11 @@
-#ifndef RENDERER_LIBTCOD_H
-#define RENDERER_LIBTCOD_H
+#pragma once
 
 #include "renderer.hpp"
+#include "../data.hpp"
 
 #include <libtcod.hpp>
 #include <string>
+#include <iostream>
 
 namespace roguelike
 {
@@ -16,24 +17,30 @@ namespace roguelike
     class RendererTCOD : public Renderer
     {
     public:
-        RendererTCOD(TCOD_Console& console) : m_console(console) {}
+        RendererTCOD(TCOD_Console& console, TCOD_Context* context) 
+            : console(console), context(context) {}
 
-        void RenderEntity(const EntityData* pEntity) override
+        void Clear() override {
+            console.clear();
+        }
+
+        void Render(const WorldRepresentation& r, const vec2di& p) const override
         {
             tcod::print(
-                m_console, 
-                {pEntity->position.GetX(), pEntity->position.GetY()}, 
-                std::string(1, pEntity->symbol),
-                ColorToTCODColor(pEntity->foreground_color),
-                ColorToTCODColor(pEntity->background_color)
+                console, 
+                {p.GetX(), p.GetY()}, 
+                r.GetSymbol(),
+                ColorToTCODColor(r.GetForegroundColor()),
+                ColorToTCODColor(r.GetBackgroundColor())
             );
         }
 
+        void Present() override {
+            context->present(console);
+        }
+
     private:
-        TCOD_Console& m_console;
+        TCOD_Console& console;
+        TCOD_Context* context;
     };
-
-
 }
-
-#endif

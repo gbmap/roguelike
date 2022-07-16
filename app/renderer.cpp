@@ -1,14 +1,12 @@
-
-
 #include "renderer.hpp"
 #include <algorithm>
 
 namespace roguelike
 {
-    void Renderer::Render(std::vector<EntityData*> pEntities)
+    void Renderer::Render(const std::vector<Entity*> reps) const
     {
-        std::for_each(pEntities.begin(), pEntities.end(), [this](EntityData* pEntity) {
-            this->RenderEntity(pEntity);
+        std::for_each(reps.begin(), reps.end(), [this](Entity* e) {
+            this->Render(e->GetRepresentation(), e->GetPosition());
         });
     }
 }

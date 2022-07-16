@@ -1,5 +1,3 @@
-
-
 #ifndef SAI_ISTATE_SELECTOR_HPP
 #define SAI_ISTATE_SELECTOR_HPP
 

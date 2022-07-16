@@ -4,6 +4,7 @@
 #include "./math/vec2d.hpp"
 
 #include <stdint.h>
+#include <string_view>
 
 namespace roguelike
 {
@@ -12,26 +13,22 @@ namespace roguelike
         uint8_t r, g, b;
     };
 
-    struct EntityData
+    typedef std::string_view char_t;
+
+    class WorldRepresentation
     {
-        char16_t symbol           = '@';
-        vec2di   position         = vec2di(0, 0);
+        char_t symbol           = "@";
         color_t  foreground_color = {255, 255, 255};
         color_t  background_color = {0, 0, 0};
+    public:
+        WorldRepresentation(char_t symbol, color_t foreground_color, color_t background_color)
+            : symbol(symbol), foreground_color(foreground_color), background_color(background_color) {}
+        const char_t& GetSymbol() const { return symbol; }
+        const color_t& GetForegroundColor() const { return foreground_color; }
+        const color_t& GetBackgroundColor() const { return background_color; }
     };
 
-    struct StatsData 
-    {
-        float food;
-        float energy;
-    };
-
-    struct ActorData
-    {
-        EntityData entity;
-        StatsData stats;
-    };
-
+    struct Stats {};
 }
 
 #endif
