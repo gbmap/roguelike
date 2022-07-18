@@ -25,6 +25,7 @@ target_link_libraries(tests_world PRIVATE libtcod::libtcod SDL2::SDL2 Catch2::Ca
 target_link_libraries(tests_threading PRIVATE Catch2::Catch2 Catch2::Catch2WithMain)
 
 target_compile_features(roguelike PRIVATE cxx_std_17)
+target_compile_features(tests_world PRIVATE cxx_std_17)
 target_compile_features(tests_threading PRIVATE cxx_std_17)
 
 

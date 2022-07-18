@@ -1,9 +1,12 @@
 #include "entity.hpp"
-#include "world.hpp"
 
+#include <random>
+#include <functional>
+
+#include "world.hpp"
 #include "renderer.hpp"
 #include "commands/entity_command.hpp"
-#include <random>
+#include "rng.hpp"
 
 namespace roguelike {
     const WorldRepresentation& Entity::GetRepresentation() const {
@@ -20,12 +23,16 @@ namespace roguelike {
 
     commands::EntityCommand* Entity::GetNextAction(const World& world) {
         vec2di p = GetPosition();
-        int random_x = p.GetX() + (std::rand() % 2 == 0 ? -1 : 1);
-        int random_y = p.GetY() + (std::rand() % 2 == 0 ? -1 : 1);
+        int random_x = p.GetX() + (GetRandomInt() % 2 == 0 ? -1 : 1);
+        int random_y = p.GetY() + (GetRandomInt() % 2 == 0 ? -1 : 1);
         return new commands::MoveEntityCommand(this, vec2di({random_x,random_y}));
     }
 
     void Entity::Draw(const Renderer* renderer) const {
         renderer->Render(world_representation, position);
+    }
+
+    int Entity::GetRandomInt() const {
+        return RNG::Rand();
     }
 }

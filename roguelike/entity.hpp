@@ -25,6 +25,8 @@ namespace roguelike {
         vec2di position;
         WorldRepresentation world_representation;
         Stats stats;
+
+        int GetRandomInt() const;
     };
 
     typedef std::vector<Entity*> EntityVector;

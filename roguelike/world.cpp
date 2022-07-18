@@ -43,66 +43,7 @@ namespace roguelike {
 
     std::vector<commands::EntityCommand*> World::GatherEntitiesNextActions() {
         std::lock_guard lock(mutex);
-        /*
-        typedef std::vector<commands::EntityCommand*> CommandVector;
-        // typedef std::vector<Entity*> EntityVector;
-
-        int n_threads = std::min(
-            (int)entities.size(), (int)std::thread::hardware_concurrency()
-        );
-        n_threads = std::max(n_threads, 1);
-
-        CommandVector commands;
-        // std::vector<std::thread> threads;
-        std::vector<std::future<CommandVector>> futures;
-
-        int block_size = entities.size() / n_threads;
-        int exceeding = entities.size() % n_threads;
-
-        EntityVector::iterator it = entities.begin();
-        for (int i = 0; i < n_threads; i++) {
-            std::future<CommandVector> future = std::async([this](EntityVector entities) {
-                CommandVector commands;
-                for (auto entity : entities) {
-                    commands::EntityCommand* command = entity->GetNextAction(*this);
-                    if (command != nullptr) {
-                        commands.push_back(command);
-                    }
-                }
-                return commands;
-            }, EntityVector(it, it+block_size+exceeding*(i==n_threads-1)));
-            futures.push_back(std::move(future));
-
-            // threads.push_back(std::thread([&, begin, end]() {
-            //     std::vector<commands::Command*> thread_commands;
-            //     for (auto entity = begin; entity != end; entity++) {
-            //         auto command = (*entity)->GetNextAction(*this);
-            //         if (command == nullptr)
-            //             continue;
-            //         thread_commands.push_back(command);
-            //     }
-
-            //     std::lock_guard lock(mutex);
-            //     commands.insert(commands.end(), thread_commands.begin(), thread_commands.end());
-            // }));
-        }
-
-        for (auto& future : futures) {
-            // std::lock_guard lock(mutex);
-            auto thread_commands = future.get();
-            commands.insert(commands.end(), thread_commands.begin(), thread_commands.end());
-        }
-
-
-        // for (auto& t : threads) {
-        //     t.join();
-        // }
-
-        return commands;
-        */
-
-    //    return UpdateMultipleThreads();
-        return UpdateMultipleThreads();
+        return UpdateMultipleTasks();
     }
 
     EntityCommandVector World::UpdateInSingleThread() {
@@ -158,7 +99,43 @@ namespace roguelike {
     }
     
     EntityCommandVector World::UpdateMultipleTasks() {
-        return EntityCommandVector();
-    }
+        int n_threads = (int)std::thread::hardware_concurrency();
+        int n_entities = entities.size();
+        if (n_entities == 0)
+            return EntityCommandVector();
 
+        if (n_entities < n_threads)
+            n_threads = 1;
+
+        int block_size = n_entities / n_threads;
+        int remaining_size = n_entities;
+
+        EntityCommandVector final_commands;
+        std::mutex commands_mutex;
+
+        std::vector<std::future<EntityCommandVector>> futures;
+
+        for (auto begin = entities.begin(), end = entities.end(); begin!=end;) {
+            int current_block_size = std::min(block_size, remaining_size);
+            futures.emplace_back(
+                std::async([begin, current_block_size, this]() {
+                std::vector<commands::EntityCommand*> thread_commands;
+                std::for_each(begin, begin+current_block_size, [&](Entity* entity) {
+                    auto command = entity->GetNextAction(*this);
+                    if (command != nullptr)
+                        thread_commands.push_back(command);
+                });
+                return thread_commands;
+            }));
+            begin += current_block_size;
+            remaining_size -= current_block_size;
+        }
+
+        std::for_each(futures.begin(), futures.end(), [&final_commands](std::future<EntityCommandVector>& future) {
+            EntityCommandVector commands = future.get();
+            final_commands.insert(final_commands.end(), commands.begin(), commands.end());
+        });
+
+        return final_commands;
+    }
 } 
