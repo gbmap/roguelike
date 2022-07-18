@@ -9,7 +9,9 @@
 namespace roguelike {
     namespace commands{
         class WorldCommand;
+        class EntityCommand;
     }
+    typedef std::vector<commands::EntityCommand*> EntityCommandVector;
     class World {
     public:
         World() : entities() {}
@@ -23,7 +25,8 @@ namespace roguelike {
 
         commands::CommandPoll<commands::WorldCommand>* GetCommandPoll();
 
-        std::vector<Entity*> GetEntities() const { return entities; }
+        size_t GetEntityCount();  
+        Entity* GetEntity(int index);
         void SpawnEntity(Entity* entity);
         void DestroyEntity(Entity* entity);
         void UpdateEntityLogic();
@@ -34,5 +37,10 @@ namespace roguelike {
         std::vector<Entity*> entities;
 
         commands::CommandPoll<commands::WorldCommand> command_poll;
+        EntityCommandVector GatherEntitiesNextActions();
+
+        EntityCommandVector UpdateInSingleThread();
+        EntityCommandVector UpdateMultipleThreads();
+        EntityCommandVector UpdateMultipleTasks();
     };
 }

@@ -56,11 +56,15 @@ namespace roguelike
 
     void Roguelike::Update(const float& dt)
     {
+        world.UpdateEntityLogic();
     }
 
     void Roguelike::Render() {
         renderer->Clear();
-        renderer->Render(world.GetEntities());
+        int entity_count = world.GetEntityCount();
+        for (int i = 0; i < world.GetEntityCount(); i++) {
+            world.GetEntity(i)->Draw(renderer);
+        }
         renderer->Present();
     }
 }

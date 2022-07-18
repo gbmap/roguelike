@@ -6,9 +6,9 @@
 #include <atomic>
 #include <thread>
 
-#include "app/roguelike.hpp"
-#include "app/renderer_libtcod.hpp"
-#include "app/commands/world_command.hpp"
+#include "roguelike/roguelike.hpp"
+#include "roguelike/renderer_libtcod.hpp"
+#include "roguelike/commands/world_command.hpp"
 
 using namespace roguelike;
 using namespace std::literals::chrono_literals;
@@ -29,14 +29,16 @@ void PollEvents(Roguelike& game) {
       }
       else if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_c) {
-          Entity* entity = new Entity({"☺", {255,255,255}, {0,0,0}}, {0, 0});
+          Entity* entity = new Entity({"☺", {255,255,255}, {0,0,0}}, {40, 12});
           auto command = new roguelike::commands::WorldSpawnEntityCommand(entity);
           game.GetWorld().GetCommandPoll()->QueueCommand(command);
+
         }
-
-
-        auto command = new roguelike::commands::RoguelikeKeyCommand(event.key.keysym.sym);
-        game.GetCommandPoll()->QueueCommand(command);
+        // else if (event.key.keysym.sym == )
+        else { 
+          auto command = new roguelike::commands::RoguelikeKeyCommand(event.key.keysym.sym);
+          game.GetCommandPoll()->QueueCommand(command);
+        }
       }
   }
 }

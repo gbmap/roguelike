@@ -15,7 +15,7 @@ namespace roguelike::commands {
     template <typename CommandType>
     CommandType* CommandPoll<CommandType>::PopCommand() {
         std::unique_lock<std::mutex> lock(mutex);
-        condition.wait(lock, [this]() { return !commands.empty(); });
+        condition.wait(lock, [this]() { return commands.size() > 0; });
 
         CommandType* c = commands.front();
         commands.pop();
