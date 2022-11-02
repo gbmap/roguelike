@@ -29,15 +29,18 @@ namespace SAI
     class StateMachine
     {
     public:
+        StateMachine(std::shared_ptr<StateSelector<SAI_STATE_PARAMETERS>> pStateSelector = nullptr)
+            : pStateSelector(pStateSelector) {}
+
         void AddState(SAI_GENERIC_STATE* pState);
         void RemoveState(SAI_GENERIC_STATE* pState);
         
         SAI_GENERIC_STATE* GetCurrentState(
-            const StateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
             const SAI_STATE_PARAMETERS* pParameters
         ) const;
     private:
         std::vector<SAI_GENERIC_STATE*> m_States;
+        std::shared_ptr<StateSelector<SAI_STATE_PARAMETERS>> pStateSelector;
     };
 
 
@@ -60,7 +63,6 @@ namespace SAI
 
     SAI_TEMPLATE_STATE_PARAMETERS
     SAI_GENERIC_STATE* StateMachine<SAI_STATE_PARAMETERS>::GetCurrentState(
-        const StateSelector<SAI_STATE_PARAMETERS>* pStateSelector,
         const SAI_STATE_PARAMETERS* parameters
     ) const
     {

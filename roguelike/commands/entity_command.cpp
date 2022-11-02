@@ -1,7 +1,7 @@
 
 #include "entity_command.hpp"
 #include "../entity.hpp"
-#include "../world.hpp"
+#include "../world/world.hpp"
 
 namespace roguelike {
     namespace commands {

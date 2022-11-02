@@ -1,0 +1,12 @@
+---
+name: shrubbery 
+representation: 
+  type: static
+  character: "*"
+  color: [0, 255, 0]
+  background_color: [0, 0, 0]
+  walkable: true
+items:
+  - type: apple
+    chance: 20
+    amount: 5

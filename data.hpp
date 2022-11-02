@@ -13,7 +13,7 @@ namespace roguelike
         uint8_t r, g, b;
     };
 
-    typedef std::string_view char_t;
+    typedef std::string char_t;
 
     class WorldRepresentation
     {
@@ -28,7 +28,10 @@ namespace roguelike
         const color_t& GetBackgroundColor() const { return background_color; }
     };
 
-    struct Stats {};
+    struct EntityStats 
+    {
+
+    };
 }
 
 #endif

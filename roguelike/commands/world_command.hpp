@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../entity.hpp"
-#include "../world.hpp"
+#include "../world/world.hpp"
 #include "command.hpp"
 
 namespace roguelike

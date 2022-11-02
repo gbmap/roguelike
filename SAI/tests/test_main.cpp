@@ -14,9 +14,10 @@ TEST_CASE("MaxProbabilityStateSelector 2.0 > 1.0", "[MaxProbabilityStateSelector
 
     MaxProbabilityStateSelector<void> selector;
 
-    StateMachine<void> stateMachine;
+    std::shared_ptr<MaxProbabilityStateSelector<void>> pSelector(&selector);
+    StateMachine<void> stateMachine(pSelector);
     stateMachine.AddState(&stateA);
     stateMachine.AddState(&stateB);
 
-    REQUIRE(stateMachine.GetCurrentState(&selector, nullptr) == &stateB);
+    REQUIRE(stateMachine.GetCurrentState(nullptr) == &stateB);
 }

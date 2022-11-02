@@ -1,7 +1,7 @@
 
 #include <catch.hpp>
 #include <chrono>
-#include "../roguelike/world.hpp"
+#include "../roguelike/world/world.hpp"
 #include "../roguelike/entity.hpp"
 #include "../roguelike/commands/world_command.hpp"
 

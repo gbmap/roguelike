@@ -6,7 +6,7 @@
 #include <atomic>
 
 #include "renderer.hpp"
-#include "world.hpp"
+#include "world/world.hpp"
 #include "commands/command_handler.hpp"
 #include "commands/command_poll.hpp"
 #include "commands/roguelike_command.hpp"
@@ -38,6 +38,10 @@ namespace roguelike
         std::thread thread_world_command;
 
         void Update(const float& dt);
+
+        void ThreadUpdate();
+        void ThreadExecuteCommands();
+        void ThreadExecuteWorldCommands();
     };
 }
 

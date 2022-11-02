@@ -9,6 +9,8 @@
 #include "roguelike/roguelike.hpp"
 #include "roguelike/renderer_libtcod.hpp"
 #include "roguelike/commands/world_command.hpp"
+#include "roguelike/entity_parser/entity_yml_parser.hpp"
+#include "roguelike/rng.hpp"
 
 using namespace roguelike;
 using namespace std::literals::chrono_literals;
@@ -30,6 +32,7 @@ void PollEvents(Roguelike& game) {
       else if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_c) {
           Entity* entity = new Entity({"☺", {255,255,255}, {0,0,0}}, {40, 12});
+          entity->SetBrain(new RandomMovementBrain());
           auto command = new roguelike::commands::WorldSpawnEntityCommand(entity);
           game.GetWorld().GetCommandPoll()->QueueCommand(command);
 
@@ -57,6 +60,21 @@ int main(int argc, char* argv[]) {
   auto context = tcod::new_context(params);
 
   Roguelike r = Roguelike(new roguelike::RendererTCOD(console, context.get()));
+
+  auto parser = roguelike::EntityYMLParser();
+  for (int i = 0; i < 20; i++) {
+    std::string entity_file = "data/grass.yml";
+    if (i%2 == 0) {
+      entity_file = "data/shrubbery.yml";
+    }
+
+    Entity* entity = parser.ParseFile(entity_file);
+    entity->SetPosition((int)((((float)RNG::Rand())/100)*80), (int)((((float)RNG::Rand())/100)*25));
+    r.GetWorld().SpawnEntity(entity);
+  }
+
+  r.GetWorld().SpawnEntity(new Entity({"☺", {255,255,255}, {0,0,0}}, {40, 12}));
+
   r.StartSystems();
   while (g_running) {
     PollEvents(r);

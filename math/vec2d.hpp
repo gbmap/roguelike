@@ -8,6 +8,7 @@ namespace roguelike
     class Vec2D
     {
     public:
+        Vec2D() {}
         Vec2D(T x, T y) : x(x), y(y) {}
 
         T GetX() const { return x; }

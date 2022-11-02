@@ -1,16 +1,16 @@
 #pragma once
 
-
+#include "entity_brain.hpp"
 #include "../commands/entity_command.hpp"
 
 namespace roguelike
 {
     class Entity;
-    class EntityBrain
+    class DummyBrain : public EntityBrain
     {
     public:
-        virtual commands::EntityCommand* GetNextCommand(
+        commands::EntityCommand* GetNextCommand(
             Entity& entity, const World& world
-        ) = 0;
+        ) override { return nullptr; }
     };
 }

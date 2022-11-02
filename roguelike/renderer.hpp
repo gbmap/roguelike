@@ -10,6 +10,23 @@
 
 namespace roguelike
 {
+    class IRenderable
+    {
+    public:
+        void Draw(const Renderer* renderer) const;
+    };
+
+    class AnimatedRenderable : public IRenderable
+    {
+    public:
+
+    };
+
+    /*
+        Responsible for rendering every IRenderable to the screen.
+        Using the observer pattern, listens to created and destroyed IRenderables
+        and renders them on command.
+    */
     class Renderer
     {
     public:

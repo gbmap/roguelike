@@ -2,15 +2,17 @@
 #include <vector>
 #include <mutex>
 
-#include "entity.hpp"
-#include "commands/command_poll.hpp"
+#include "../entity.hpp"
+#include "../commands/command_poll.hpp"
 // #include "commands/world_command.hpp"
 
 namespace roguelike {
+
     namespace commands{
         class WorldCommand;
         class EntityCommand;
     }
+
     typedef std::vector<commands::EntityCommand*> EntityCommandVector;
     class World {
     public:

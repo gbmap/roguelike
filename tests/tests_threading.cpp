@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int random_int() {
     return rand() % 100;
 }

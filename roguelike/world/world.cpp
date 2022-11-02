@@ -4,9 +4,9 @@
 #include <math.h>
 #include <future>
 
-#include "commands/command.hpp"
-#include "commands/world_command.hpp"
-#include "commands/entity_command.hpp"
+#include "../commands/command.hpp"
+#include "../commands/world_command.hpp"
+#include "../commands/entity_command.hpp"
 
 namespace roguelike {
     commands::CommandPoll<commands::WorldCommand>* World::GetCommandPoll() {
@@ -43,7 +43,7 @@ namespace roguelike {
 
     std::vector<commands::EntityCommand*> World::GatherEntitiesNextActions() {
         std::lock_guard lock(mutex);
-        return UpdateMultipleTasks();
+        return UpdateInSingleThread();
     }
 
     EntityCommandVector World::UpdateInSingleThread() {
