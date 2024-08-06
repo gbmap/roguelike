@@ -1,3 +1,8 @@
+main
+vcpkg_installed/
+CMakeFiles/
+CMakeCache.txt
+
 # Prerequisites
 *.d
 
