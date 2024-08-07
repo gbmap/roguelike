@@ -8,7 +8,7 @@ void world_gen_grass(world_t *w) {
                           (((double)y) / w->size.y) * sz, 0.1, 2, 1338);
       if (p < 1.5) {
         entity_t e = {x, y, 0, ENT_MASK_VALID, "a"};
-        world_spawn_level(w, e);
+        world_spawn(w, e);
       }
     }
   }

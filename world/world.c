@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-int get_pos1d(world_t *w, int x, int y) { return w->size.y * y + x; }
+int get_pos1d(world_t *w, int x, int y) { return w->size.x * y + x; }
 
 world_t *world_new(int w, int h, int max_ent) {
   world_t *world = (world_t *)malloc(sizeof(world_t));
