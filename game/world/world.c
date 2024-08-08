@@ -1,7 +1,6 @@
 #include "world.h"
 
-#include "../entity.h"
-#include "../termbox2/termbox2.h"
+#include "../../termbox2/termbox2.h"
 
 #include <stdlib.h>
 
@@ -23,14 +22,14 @@ world_t *world_new(int w, int h, int max_ent) {
   return world;
 }
 
-void world_spawn(world_t *w, entity_t e) {
+entity_t *world_spawn(world_t *w, entity_t e) {
   if (!ent_isdynamic(&e)) {
     world_spawn_level(w, e);
   } else {
     for (int i = 0; i < w->max_entities; i++) {
       if (!ent_isvalid(&w->entities[i])) {
         w->entities[i] = e;
-        return;
+        return &w->entities[i];
       }
     }
   }

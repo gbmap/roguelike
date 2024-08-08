@@ -9,7 +9,7 @@
 //      WORLD
 // ====================
 
-#include "../entity.h"
+#include "entity/entity.h"
 
 typedef struct {
   int x;
@@ -26,7 +26,7 @@ typedef struct {
 } world_t;
 
 world_t *world_new(int w, int h, int max_ent);
-void world_spawn(world_t *w, entity_t e);
+entity_t *world_spawn(world_t *w, entity_t e);
 void world_spawn_level(world_t *w, entity_t e);
 
 void world_update(world_t *w);

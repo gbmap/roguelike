@@ -8,6 +8,7 @@
 
 #define ENT_MASK_DYNAMIC 0b00000001
 #define ENT_MASK_VALID 0b10000000
+#define ENT_MASK_PLAYER 0b01000000
 
 typedef struct {
   const char *name;
