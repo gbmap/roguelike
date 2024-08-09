@@ -4,10 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-http_request_t http_create_request(const char *url, const char *body) {
-  http_request_t r;
-  r.url = url;
-  r.body = body;
+http_request_t http_create_request(const char *method, const char *url,
+                                   const char *body) {
+  http_request_t r = {method, url, body};
   for (int i = 0; i < HTTP_MAX_HEADERS; i++) {
     r.headers[i] = "\0";
   }
@@ -29,9 +28,6 @@ typedef struct {
 size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
   size_t realsize = size * nmemb;
   http_response_t *req = (http_response_t *)userdata;
-
-  printf("receive chunk of %zu bytes\n", realsize);
-
   while (req->buflen < req->len + realsize + 1) {
     req->buffer = realloc(req->buffer, req->buflen + CHUNK_SIZE);
     req->buflen += CHUNK_SIZE;
@@ -39,9 +35,6 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
   memcpy(&req->buffer[req->len], ptr, realsize);
   req->len += realsize;
   req->buffer[req->len] = 0;
-
-  printf("%s", req->buffer);
-
   return realsize;
 }
 
@@ -85,10 +78,6 @@ const char *_http_request(http_client_t *h, const char *method,
   return response.buffer;
 }
 
-const char *http_get(http_client_t *h, http_request_t r) {
-  return _http_request(h, "GET", r);
-}
-
-const char *http_post(http_client_t *h, http_request_t r) {
-  return _http_request(h, "POST", r);
+const char *http_send(http_client_t *h, http_request_t r) {
+  return _http_request(h, r.method, r);
 }

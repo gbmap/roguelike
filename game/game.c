@@ -68,6 +68,7 @@ void game_update(game_t *g, uint64_t dt) {
     } else if (ev.ch == *"3") {
       STEP_MS = 50;
     } else if (ev.ch == *"s") {
+      // ent_say(g->player, "This is a message!");
       speech_push(&g->speech, "This is a message!", g->player);
     }
   }
