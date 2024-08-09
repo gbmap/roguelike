@@ -19,6 +19,13 @@ void draw_border() {
   }
 }
 
+void draw_debug(game_t *g) {
+  tb_printf(0, g->term_w - 2, 0, 0, "world size=%d,%d", g->world->size.x,
+            g->world->size.y);
+
+  tb_printf(g->term_w - 16, g->term_h - 1, 0, 0, "|dt=%dms|", DELTA_TIME);
+}
+
 game_t *game_new() {
   game_t *g = (game_t *)malloc(sizeof(game_t));
   g->term_w = tb_width();
@@ -79,5 +86,6 @@ void game_draw(game_t *g) {
   speech_draw(&g->speech);
   draw_border();
   log_draw(g->log, g->term_w - 35, g->term_h - 19, 32, 16);
+  draw_debug(g);
   tb_present();
 }
