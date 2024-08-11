@@ -4,7 +4,7 @@ C_UI := game/ui/ui.c game/ui/draw.c game/ui/speech_box.c game/ui/sprite.c game/u
 C_WORLD := game/world/world.c game/world/world_gen.c random/perlin.c
 C_ENTITY := game/world/entity/player.c game/world/entity/entity.c  game/world/entity/entity_brain.c
 C_GAME := game/game.c game/log.c game/time.c $(C_WORLD) $(C_ENTITY) $(C_UI) $(C_HTTP) $(C_THIRDPARTY)
-LIBS := -lcurl -lpthread
+LIBS := -lcurl -lpthread -lm
 
 build: 
 	gcc main.c $(C_GAME) -o main $(LIBS) -DJSON_SKIP_WHITESPACE

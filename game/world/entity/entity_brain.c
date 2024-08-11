@@ -15,8 +15,12 @@ const char *get_openai_api_key() {
   }
 
   char *api_key = getenv("OPENAI_API_KEY");
-  int hbuflen = strlen(api_key) + 1 + strlen("Authorization: Bearer ");
+  if (api_key == 0) {
+    printf("\nNo API key configured. OPENAI_API_KEY=your key\n");
+    exit(-1);
+  }
 
+  int hbuflen = strlen(api_key) + 1 + strlen("Authorization: Bearer ");
   OPENAI_API_KEY = (char *)malloc(hbuflen);
   snprintf(OPENAI_API_KEY, hbuflen, "Authorization: Bearer %s", api_key);
   return OPENAI_API_KEY;
