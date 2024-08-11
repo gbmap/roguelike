@@ -10,17 +10,18 @@
 #define ENT_MASK_VALID 0b10000000
 #define ENT_MASK_PLAYER 0b01000000
 
-#include "../../d_game.h"
+#include "d_game.h"
 
 extern entity_t ENT_INVALID;
 
-void ent_draw(entity_t *e);
-void ent_update(entity_t *e);
 
-int ent_isvalid(entity_t *e);
-int ent_isdynamic(entity_t *e);
+void E_Draw(entity_t* e);
+void E_Update(entity_t* e);
 
-void ent_destroy(entity_t *e);
+int E_IsValid(entity_t* e);
+int E_IsDynamic(entity_t *e);
+
+void E_Kill(entity_t *e);
 
 void ent_say(entity_t *e, game_t *g, const char *msg);
 void ent_hear(entity_t *e, game_t *g, const char *msg);

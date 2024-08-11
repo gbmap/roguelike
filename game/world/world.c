@@ -1,7 +1,7 @@
 #include "world.h"
 
 #include "../../termbox2/termbox2.h"
-#include "entity/entity.h"
+#include "../g_entity.h"
 #include "entity/player.h"
 
 #include <stdlib.h>
@@ -25,11 +25,11 @@ world_t *world_new(int w, int h, int max_ent) {
 }
 
 entity_t *world_spawn(world_t *w, entity_t e) {
-  if (!ent_isdynamic(&e)) {
+  if (!E_IsDynamic(&e)) {
     world_spawn_level(w, e);
   } else {
     for (int i = 0; i < w->max_entities; i++) {
-      if (!ent_isvalid(&w->entities[i])) {
+      if (!E_IsValid(&w->entities[i])) {
         w->entities[i] = e;
         return &w->entities[i];
       }
@@ -39,7 +39,7 @@ entity_t *world_spawn(world_t *w, entity_t e) {
 
 void world_spawn_level(world_t *w, entity_t e) {
   entity_t *le = world_get_entity(w, e.x, e.y, 0);
-  if (ent_isvalid(le)) {
+  if (E_IsValid(le)) {
     return;
   }
 
@@ -47,14 +47,14 @@ void world_spawn_level(world_t *w, entity_t e) {
   w->level[p] = e;
 }
 
-void world_destroy(world_t *w, entity_t *e) { ent_destroy(e); }
+void world_destroy(world_t *w, entity_t *e) { E_Kill(e); }
 
 void world_update(world_t *w) {
   for (int i = 0; i < w->max_entities; i++) {
-    if (!ent_isvalid(&w->entities[i])) {
+    if (!E_IsValid(&w->entities[i])) {
       continue;
     }
-    ent_update(&w->entities[i]);
+    E_Update(&w->entities[i]);
   }
 }
 
@@ -68,7 +68,7 @@ void world_draw_level(world_t *w) {
   int sz = w->size.x * w->size.y;
   for (int i = 0; i < sz; i++) {
     entity_t e = w->level[i];
-    if (!ent_isvalid(&e)) {
+    if (!E_IsValid(&e)) {
       continue;
     }
 
@@ -80,7 +80,7 @@ void world_draw_level(world_t *w) {
 void world_draw_dynamic(world_t *w) {
   for (int i = 0; i < w->max_entities; i++) {
     entity_t e = w->entities[i];
-    if (!ent_isvalid(&e)) {
+    if (!E_IsValid(&e)) {
       continue;
     }
 
@@ -94,7 +94,7 @@ entity_t *world_get_entity(world_t *w, int x, int y, unsigned int mask) {
   if ((mask & ENT_MASK_DYNAMIC) > 0) {
     for (int i = 0; i < w->max_entities; i++) {
       entity_t *e = &w->entities[i];
-      if (!ent_isvalid(e)) {
+      if (!E_IsValid(e)) {
         continue;
       }
 
@@ -117,7 +117,7 @@ entity_collection_t world_get_entities(world_t *w, int x, int y, int radius) {
   int sz = 0;
   for (int i = 0; i < w->max_entities && sz < 64; i++) {
     entity_t *e = &w->entities[i];
-    if (!ent_isvalid(e)) {
+    if (!E_IsValid(e)) {
       continue;
     }
 

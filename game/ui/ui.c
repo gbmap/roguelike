@@ -2,7 +2,7 @@
 
 #include "../../termbox2/termbox2.h"
 #include "../def.h"
-#include "../world/entity/entity.h"
+#include "../d_world.h"
 #include "draw.h"
 #include "speech_box.h"
 #include "textbox.h"

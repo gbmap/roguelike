@@ -6,6 +6,8 @@
 #define CMD_WRLD_SPAWN 1000
 #define CMD_WRLD_KILL 1001
 
+#define CMD_LOG 50
+
 #define CMD_BUFFER_SIZE 1024
 
 typedef struct {

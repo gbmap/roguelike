@@ -2,8 +2,7 @@
 #define PLAYER__H
 
 #include "../../../termbox2/termbox2.h"
-#include "../world.h"
-#include "entity.h"
+#include "../../d_world.h"
 
 extern entity_t *g_player;
 

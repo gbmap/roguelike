@@ -1,14 +1,14 @@
-#include "entity.h"
-#include "../../../termbox2/termbox2.h"
-#include "../../ui/speech_box.h"
-#include "../../world/world.h"
+#include "g_entity.h"
+#include "../termbox2/termbox2.h"
+#include "ui/speech_box.h"
+#include "world/world.h"
 
-#include "entity_brain.h"
+#include "world/entity/entity_brain.h"
 #include <string.h>
 
 entity_t ENT_INVALID = {-1, -1, -1, 0, "\0"};
 
-void ent_update(entity_t *e) {
+void E_Update(entity_t *e) {
   if (e->mask & ENT_MASK_PLAYER) {
     return;
   }
@@ -22,11 +22,11 @@ void ent_update(entity_t *e) {
     }
   }
 }
-void ent_draw(entity_t *e) { tb_print(e->x, e->y, 0, 0, e->symbol); }
 
-int ent_isvalid(entity_t *e) { return (e->mask & ENT_MASK_VALID) > 1; }
-int ent_isdynamic(entity_t *e) { return e->mask & ENT_MASK_DYNAMIC; }
-void ent_destroy(entity_t *e) { e->mask = 0; }
+void E_Draw(entity_t *e) { tb_print(e->x, e->y, 0, 0, e->symbol); }
+int E_IsValid(entity_t* e) { return (e->mask & ENT_MASK_VALID) > 1; }
+int E_IsDynamic(entity_t *e) { return e->mask & ENT_MASK_DYNAMIC; }
+void E_Kill(entity_t *e) { e->mask = 0; }
 
 // ============
 //
