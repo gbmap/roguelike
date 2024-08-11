@@ -10,23 +10,7 @@
 #define ENT_MASK_VALID 0b10000000
 #define ENT_MASK_PLAYER 0b01000000
 
-typedef struct {
-  const char *name;
-  float value;
-} entity_stat_t;
-
-typedef struct {
-  const char *name;
-  float value;
-} entity_opinion_t;
-
-typedef struct {
-  int x;
-  int y;
-  int z;
-  int mask;
-  const char *symbol;
-} entity_t;
+#include "../../d_game.h"
 
 extern entity_t ENT_INVALID;
 
@@ -37,5 +21,8 @@ int ent_isvalid(entity_t *e);
 int ent_isdynamic(entity_t *e);
 
 void ent_destroy(entity_t *e);
+
+void ent_say(entity_t *e, game_t *g, const char *msg);
+void ent_hear(entity_t *e, game_t *g, const char *msg);
 
 #endif

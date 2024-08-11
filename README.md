@@ -1,8 +1,13 @@
 
+// -----------------
+//   CODE
+
+d_* = data
+g_* = game logic
 
 
-
-
+// -----------------
+//   some ideas
 
 - entities have __opinions__; 
 - opinions influence decision-making;

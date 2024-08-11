@@ -1,6 +1,8 @@
 #include "world.h"
 
 #include "../../termbox2/termbox2.h"
+#include "entity/entity.h"
+#include "entity/player.h"
 
 #include <stdlib.h>
 
@@ -59,6 +61,7 @@ void world_update(world_t *w) {
 void world_draw(world_t *w) {
   world_draw_level(w);
   world_draw_dynamic(w);
+  player_draw(w->player);
 }
 
 void world_draw_level(world_t *w) {
@@ -107,4 +110,23 @@ entity_t *world_get_entity(world_t *w, int x, int y, unsigned int mask) {
   }
 
   return &ENT_INVALID;
+}
+
+entity_collection_t world_get_entities(world_t *w, int x, int y, int radius) {
+  entity_collection_t coll;
+  int sz = 0;
+  for (int i = 0; i < w->max_entities && sz < 64; i++) {
+    entity_t *e = &w->entities[i];
+    if (!ent_isvalid(e)) {
+      continue;
+    }
+
+    int dx = e->x - x;
+    int dy = e->y - y;
+    if ((dx * dx + dy * dy) < radius * radius) {
+      coll.entities[sz] = e;
+      coll.count = ++sz;
+    }
+  }
+  return coll;
 }

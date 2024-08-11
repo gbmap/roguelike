@@ -10,6 +10,7 @@ typedef struct {
   const char *url;
   const char *body;
   const char *headers[HTTP_MAX_HEADERS];
+  void *data;
 } http_request_t;
 
 http_request_t http_create_request(const char *method, const char *url,

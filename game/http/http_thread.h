@@ -5,7 +5,6 @@
  * Thread that sends HTTP requests to endpoints
  * and callbacks with their results.
  */
-#include "../game.h"
 #include "http.h"
 
 typedef void (*http_request_callback)(http_request_t r, const char *response);

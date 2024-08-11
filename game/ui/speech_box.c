@@ -2,9 +2,14 @@
 
 #include "../ui/draw.h"
 #include <stdlib.h>
+#include <string.h>
 
-void speech_box_reset(speech_box_t *s, char *msg, entity_t *ent) {
-  s->msg = msg;
+void speech_box_reset(speech_box_t *s, const char *msg, entity_t *ent) {
+  int msglen = strlen(msg);
+  msglen = msglen > SPEECH_BOX_MSG_SIZE ? SPEECH_BOX_MSG_SIZE : msglen;
+  memset(&s->msg, '\0', SPEECH_BOX_MSG_SIZE);
+  strncpy(&s->msg, msg, msglen);
+  s->msg[SPEECH_BOX_MSG_SIZE - 1] = '\0';
   s->visible = 1;
   s->time = 0;
   s->ent = ent;
@@ -59,12 +64,20 @@ void speech_draw(speech_t *s) {
   }
 }
 
-void speech_push(speech_t *s, char *msg, entity_t *ent) {
+void speech_push(speech_t *s, const char *msg, entity_t *ent) {
+  speech_box_t *b = 0;
   for (int i = 0; i < SPEECH_BFR_SIZE; i++) {
-    speech_box_t *b = &s->speech_boxes[i];
-    if (b->visible) {
+    speech_box_t *bi = &s->speech_boxes[i];
+    if (bi->visible && bi->ent == ent) {
+      b = bi;
+      break;
+    } else if (!bi->visible) {
+      b = bi;
       continue;
     }
+  }
+
+  if (b) {
     speech_box_reset(b, msg, ent);
   }
 }
