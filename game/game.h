@@ -3,9 +3,9 @@
 
 #include "d_game.h"
 
-game_t *game_new();
-void game_init(game_t *g);
-void game_update(game_t *g, uint64_t dt);
-void game_draw(game_t *g);
+game_t *G_New();
+void G_Init(game_t *g);
+void G_Update(game_t *g, uint64_t dt);
+void G_Draw(game_t *g);
 
 #endif

@@ -7,14 +7,14 @@
 
 #include "../termbox2/termbox2.h"
 
-game_t *game_new() {
+game_t *G_New() {
   game_t *g = (game_t *)malloc(sizeof(game_t));
   g->term_w = tb_width();
   g->term_h = tb_height();
   return g;
 }
 
-void game_init(game_t *g) {
+void G_Init(game_t *g) {
   g->log = log_new();
 
   g->world = world_new(g->term_w, g->term_h, MAX_ENTITIES);
@@ -25,7 +25,7 @@ void game_init(game_t *g) {
 }
 
 struct tb_event ev;
-void game_update(game_t *g, uint64_t dt) {
+void G_Update(game_t *g, uint64_t dt) {
   g->dt = dt;
 
   // event handling
@@ -52,9 +52,6 @@ void game_update(game_t *g, uint64_t dt) {
         STEP_MS = 100;
       } else if (ev.ch == *"3") {
         STEP_MS = 50;
-      } else if (ev.ch == *"s") {
-        // ent_say(g->player, "This is a message!");
-        // ent_say(g->world->player, g, "This is a message!");
       } else if (ev.ch == TB_KEY_SPACE) {
         g->state = GAME_STATE_ACTION;
       } else if (ev.ch == *"q") {
@@ -75,7 +72,7 @@ void game_update(game_t *g, uint64_t dt) {
   ui_update(g, DELTA_TIME);
 }
 
-void game_draw(game_t *g) {
+void G_Draw(game_t *g) {
   // rendering
   tb_clear();
   world_draw(g->world);

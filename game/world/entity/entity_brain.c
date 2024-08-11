@@ -1,8 +1,7 @@
 #include "entity_brain.h"
 
 #include "../../../json/json.h"
-#include "../../http/http.h"
-#include "../../http/http_thread.h"
+#include "../../g_network.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -149,5 +148,5 @@ void ent_brain_think_and_answer(ent_brain_think_request_t *req,
   // and alocate a _ent_brain_think_t* and set data
   // r.data = ...;
 
-  http_request_thread_push(r, cb_ent_brain_thonk);
+  G_NetworkSendHttp(r, cb_ent_brain_thonk);
 }

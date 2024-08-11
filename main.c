@@ -10,14 +10,14 @@ int main(int argc, char *argv[]) {
   tb_init();
   tb_set_input_mode(TB_INPUT_ESC);
 
-  game_t *game = game_new();
-  game_init(game);
+  game_t *game = G_New();
+  G_Init(game);
 
   struct tb_event ev;
   uint64_t ms0 = 0;
   while (game->is_running) {
-    game_update(game, DELTA_TIME);
-    game_draw(game);
+    G_Update(game, DELTA_TIME);
+    G_Draw(game);
 
     uint64_t ms1 = time_ms();
     DELTA_TIME = ms1 - ms0;
