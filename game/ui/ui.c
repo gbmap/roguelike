@@ -1,8 +1,9 @@
 #include "ui.h"
 
 #include "../../termbox2/termbox2.h"
-#include "../def.h"
 #include "../d_world.h"
+#include "../def.h"
+#include "../g_entity.h"
 #include "draw.h"
 #include "speech_box.h"
 #include "textbox.h"
@@ -34,7 +35,7 @@ void ui_handle_event(game_t *g, const struct tb_event ev) {
   case GAME_STATE_SAY:
     if (textbox_handle_event(&txtbox_say, ev)) {
 
-      ent_say(g->world->player, g, "This is a message!");
+      E_Say(g->world->player, g, "This is a message!");
       speech_push(&g->speech, txtbox_say.buffer, g->world->player);
       textbox_clear(&txtbox_say);
       g->state = GAME_STATE_WORLD;
@@ -82,7 +83,8 @@ void ui_draw_action_menu(game_t *g) {
   int x = twh - w / 2;
   int y = thh - h / 2;
 
-  draw_square_fill(x, y, w, h, 0);
+  U_DrawSquareFill(x, y, w, h, 0, "ACTIONS");
+
   x += 2;
   tb_print(x, y + 2, 0, 0, "(s) say");
   tb_print(x, y + 3, 0, 0, "(p) place");
@@ -107,12 +109,12 @@ void ui_draw_log(game_t *g) {
     return;
   }
 
-  int x = tb_width() - 35;
-  int y = tb_height() - 19;
-  int w = 32;
-  int h = 16;
+  int w = tb_width() / 3;
+  int h = tb_height() - 4;
+  int x = tb_width() - w - 3;
+  int y = 2;
 
-  draw_square_fill(x, y, w, h, 0);
+  U_DrawSquareFill(x, y, w, h, 0, "LOG");
 
   int sw = w - 3;
   for (int i = 0, lp = 0; i < h && lp < l->sz; lp++) {

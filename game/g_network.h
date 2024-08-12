@@ -14,5 +14,7 @@ extern pthread_t httpthread;
 void G_NetworkInit();
 void G_NetworkKill();
 void G_NetworkSendHttp(http_request_t r, http_request_callback cb);
+http_request_t G_HttpRequest(const char *method, const char *host,
+                             const char *body);
 
 #endif

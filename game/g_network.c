@@ -18,7 +18,13 @@ http_request_t http_create_request(const char *method, const char *url,
   for (int i = 0; i < HTTP_MAX_HEADERS; i++) {
     r.headers[i] = "\0";
   }
+  r.data = 0;
   return r;
+}
+
+http_request_t G_HttpRequest(const char *method, const char *host,
+                             const char *body) {
+  return http_create_request(method, host, body);
 }
 
 // ==============

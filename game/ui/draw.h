@@ -18,6 +18,9 @@ void draw_square(int x, int y, int w, int h, const cfg_square_t *c);
 
 void draw_square_fill(int x, int y, int w, int h, const cfg_square_t *c);
 
+void U_DrawSquareFill(int x, int y, int w, int h, const cfg_square_t *c,
+                      const char *title);
+
 void draw_textbox(int x, int y, int w, int h, const char *msg,
                   const cfg_square_t *c);
 

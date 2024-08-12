@@ -28,8 +28,8 @@ typedef struct {
 //
 
 #define SPEECH_BOX_MSG_SIZE 256
-#define SPEECH_BOX_W 22
-#define SPEECH_BOX_H 4
+#define SPEECH_BOX_W ((256 / 4) + 2)
+#define SPEECH_BOX_H 6
 #define SPEECH_BOX_TIME 5000
 
 typedef struct {

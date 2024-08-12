@@ -32,6 +32,23 @@ void draw_square_fill(int x, int y, int w, int h, const cfg_square_t *c) {
   }
 }
 
+void U_DrawSquareFill(int x, int y, int w, int h, const cfg_square_t *c,
+                      const char *title) {
+  if (c == 0) {
+    c = &CFG_DEFAULT_SQR;
+  }
+  draw_square(x, y, w, h, c);
+  for (int ry = 1; ry < h; ry++) {
+    for (int rx = 1; rx < w; rx++) {
+      tb_print(x + rx, y + ry, c->fg, c->bg, " ");
+    }
+  }
+
+  if (title) {
+    tb_print(x + (w / 2 - strlen(title) / 2), y, 0, 0, title);
+  }
+}
+
 void draw_textbox(int x, int y, int w, int h, const char *msg,
                   const cfg_square_t *c) {
   if (c == 0) {

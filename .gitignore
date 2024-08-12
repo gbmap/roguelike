@@ -1,4 +1,4 @@
-main
+build/
 vcpkg_installed/
 CMakeFiles/
 CMakeCache.txt

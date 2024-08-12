@@ -36,8 +36,15 @@ void speech_box_draw(speech_box_t *s) {
   if (!s->visible) {
     return;
   }
-  draw_textbox(s->ent->x - SPEECH_BOX_W / 2, s->ent->y - SPEECH_BOX_H - 2,
-               SPEECH_BOX_W, SPEECH_BOX_H, s->msg, &CFG_DEFAULT_SQR);
+
+  int n = strlen(s->msg);
+  int h = n / SPEECH_BOX_W;
+  h = (h ? h : 1) + 1;
+
+  int w = (n < SPEECH_BOX_W ? n : SPEECH_BOX_W) + 4;
+
+  draw_textbox(s->ent->x - w / 2, s->ent->y - h - 2, w, h, s->msg,
+               &CFG_DEFAULT_SQR);
 }
 
 // ===================

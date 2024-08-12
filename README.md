@@ -1,9 +1,17 @@
-
+```
 // -----------------
 //   CODE
 
+files:
+
 d_* = data
 g_* = game logic
+
+W_ = world
+P_ = player
+E_ = entity
+U_ = ui
+
 
 
 // -----------------
@@ -27,4 +35,4 @@ opinions in \[-1, 1\]:
 - eat;
 - find shelter;
 - sleep;
-
+```

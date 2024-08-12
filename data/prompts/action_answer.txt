@@ -1,0 +1,1 @@
+Taking into consideration the list of these opinions, your character's personality and the preceeding dialogue you should output a message with upwards to 256 characters. The message must continue the dialogue, question something, an argument, an insult, a joke, or anything interesting without regards for facts.
