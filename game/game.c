@@ -1,11 +1,10 @@
 #include "game.h"
 
 #include "g_cmd.h"
+#include "g_player.h"
+#include "g_world.h"
 #include "u_time.h"
 #include "ui/ui.h"
-#include "world/entity/player.h"
-#include "world/world.h"
-#include "world/world_gen.h"
 
 #include "../termbox2/termbox2.h"
 
@@ -32,7 +31,11 @@ void G_Update(game_t *g, uint64_t dt) {
 
   // event handling
   uint64_t t_pre_ev = time_ms();
-  tb_peek_event(&ev, STEP_MS);
+  if (STEP_MS > 0) {
+    tb_peek_event(&ev, STEP_MS);
+  } else {
+    tb_poll_event(&ev);
+  }
   uint64_t t_post_ev = time_ms();
   if ((t_post_ev - t_pre_ev) < STEP_MS) {
     usleep((t_post_ev - t_pre_ev) * 1000);
@@ -54,6 +57,8 @@ void G_Update(game_t *g, uint64_t dt) {
         STEP_MS = 100;
       } else if (ev.ch == *"3") {
         STEP_MS = 50;
+      } else if (ev.ch == *"0") {
+        STEP_MS = 0;
       } else if (ev.ch == TB_KEY_SPACE) {
         g->state = GAME_STATE_ACTION;
       } else if (ev.ch == *"q") {

@@ -1,10 +1,9 @@
 #include "c_cmd.h"
 
 #include "g_entity.h"
-#include "u_str.h"
+#include "g_world.h"
 #include "ui/speech_box.h"
 #include "world/entity/entity_brain.h"
-#include "world/world.h"
 #include <stdlib.h>
 
 void C_EntMove(void *data) {

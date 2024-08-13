@@ -1,7 +1,7 @@
-#include "player.h"
+#include "g_player.h"
 
-#include "../../../termbox2/termbox2.h"
-#include "../world.h"
+#include "../termbox2/termbox2.h"
+#include "g_world.h"
 
 entity_t *g_player = 0;
 

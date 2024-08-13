@@ -1,8 +1,8 @@
-#ifndef PLAYER__H
-#define PLAYER__H
+#ifndef __G_PLAYER__
+#define __G_PLAYER__
 
-#include "../../../termbox2/termbox2.h"
-#include "../../d_world.h"
+#include "../termbox2/termbox2.h"
+#include "d_world.h"
 
 extern entity_t *g_player;
 

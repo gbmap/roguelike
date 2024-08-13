@@ -5,7 +5,7 @@
 //      WORLD
 // ====================
 
-#include "../d_world.h"
+#include "d_world.h"
 #include <stdint.h>
 
 world_t *world_new(int w, int h, int max_ent);
@@ -21,5 +21,7 @@ void world_destroy(world_t *w, entity_t *e);
 
 entity_t *world_get_entity(world_t *w, int x, int y, unsigned int mask);
 entity_collection_t world_get_entities(world_t *w, int x, int y, int radius);
+
+void world_gen_grass(world_t *w);
 
 #endif

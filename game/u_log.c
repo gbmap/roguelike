@@ -1,4 +1,4 @@
-#include "log.h"
+#include "u_log.h"
 
 #include "../termbox2/termbox2.h"
 #include "ui/draw.h"

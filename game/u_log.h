@@ -1,5 +1,5 @@
-#ifndef LOG__H
-#define LOG__H
+#ifndef __U_LOG__
+#define __U_LOG__
 
 #include "d_game.h"
 

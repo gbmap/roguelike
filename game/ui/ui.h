@@ -2,7 +2,7 @@
 #define UI__H
 
 #include "../d_game.h"
-#include "../log.h"
+#include "../u_log.h"
 #include <stdint.h>
 
 struct tb_event;
