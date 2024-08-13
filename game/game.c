@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "g_cmd.h"
+#include "u_time.h"
 #include "ui/ui.h"
 #include "world/entity/player.h"
 #include "world/world.h"
@@ -59,6 +61,7 @@ void G_Update(game_t *g, uint64_t dt) {
         return;
       }
     }
+    C_BufferUpdate(&cmdbuffer, dt);
     player_handle_event(g->world->player, ev);
     world_update(g->world);
     break;

@@ -48,6 +48,10 @@ typedef struct {
 } entity_stat_t;
 
 typedef struct {
+  const char *symbol;
+} entity_repr_t;
+
+typedef struct {
   int x;
   int y;
   int z;

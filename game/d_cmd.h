@@ -3,20 +3,16 @@
 
 #include <stdint.h>
 
-#define CMD_WRLD_SPAWN 1000
-#define CMD_WRLD_KILL 1001
-
-#define CMD_LOG 50
-
-#define CMD_BUFFER_SIZE 1024
+typedef void (*cmd_func_ptr)(void *);
 
 typedef struct {
-  uint32_t command;
-  void *param;
+  uint32_t code;
+  int tte;           // time to execution in world ticks
+  cmd_func_ptr func; // command function
+  void *data;        // parameters
+  void *next;        // next cmd, buffer = linked list of commands
 } cmd_t;
 
-typedef struct {
-  cmd_t *buffer[CMD_BUFFER_SIZE];
-} cmd_buffer_t;
+typedef cmd_t *cmd_buffer_t;
 
 #endif

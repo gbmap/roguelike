@@ -4,6 +4,7 @@
 #include "../d_world.h"
 #include "../def.h"
 #include "../g_entity.h"
+#include "../u_time.h"
 #include "draw.h"
 #include "speech_box.h"
 #include "textbox.h"
@@ -34,9 +35,8 @@ void ui_handle_event(game_t *g, const struct tb_event ev) {
     break;
   case GAME_STATE_SAY:
     if (textbox_handle_event(&txtbox_say, ev)) {
-
-      E_Say(g->world->player, g, "This is a message!");
-      speech_push(&g->speech, txtbox_say.buffer, g->world->player);
+      E_Say(g->world->player, g, txtbox_say.buffer);
+      // speech_push(&g->speech, txtbox_say.buffer, g->world->player);
       textbox_clear(&txtbox_say);
       g->state = GAME_STATE_WORLD;
     }

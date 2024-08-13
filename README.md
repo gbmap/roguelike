@@ -6,6 +6,8 @@ files:
 
 d_* = data
 g_* = game logic
+c_* = commands
+u_* = utils
 
 W_ = world
 P_ = player

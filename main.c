@@ -3,6 +3,7 @@
 #include "termbox2/termbox2.h"
 
 #include "game/game.h"
+#include "game/u_time.h"
 
 #define EVENT_POLL_TIMEOUT_MS 200
 

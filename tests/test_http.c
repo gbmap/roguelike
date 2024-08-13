@@ -2,7 +2,7 @@
 #define TB_IMPL
 #include "../termbox2/termbox2.h"
 
-#include "../game/g_network.h"
+#include "../game/u_network.h"
 
 // ====================
 //

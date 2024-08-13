@@ -1,7 +1,7 @@
 #include "entity_brain.h"
 
 #include "../../../json/json.h"
-#include "../../g_network.h"
+#include "../../u_network.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
